@@ -1,0 +1,81 @@
+body {
+  font-family: proxima-nova;
+}
+
+.stats .teams .team {
+  width: 480px;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.stats .teams .team .meta {
+  float: right;
+  text-align: right;
+  font-size: 20px;
+  color: #777;
+}
+
+.stats .teams .team .meta .name {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.stats .teams .team .meta .current-runner {
+  color: #333;
+}
+
+.stats .teams .team .meta .current-game {
+  color: #333;
+}
+
+.stats .teams .team .current-run .time {
+  font-size: 24px;
+  display: block;
+}
+
+.stats .teams .team .current-run .progress {
+  font-size: 14px;
+  color: #777;
+}
+
+
+.stats .teams .team .games-table {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.stats .teams .team .games-table .series {
+  display: block;
+  flex: 1 1 25%;
+  margin-right: 8px;
+}
+
+.stats .teams .team .games-table .series:last-child {
+  margin-right: 0;
+}
+
+.stats .teams .team .games-table .series.mario {
+  flex: 1 1 27%;
+}
+
+.stats .teams .team .games-table .series .game {
+  width: 100%;
+  display: flex;
+}
+
+.stats .teams .team .games-table .series .game-name {
+  text-align: left;
+  font-weight: bold;
+  display: inline-block;
+  flex: 1 1 auto;
+}
+
+.stats .teams .team .games-table .series .game-time {
+  font-weight: normal;
+  display: inline-block;
+  text-align: right;
+  flex: 1 1 auto;
+}
