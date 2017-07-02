@@ -5,4 +5,4 @@ ALTER TABLE games
 
 -- +micrate Down
 ALTER TABLE games
-  REMOVE sequence_number;
+  DROP sequence_number;

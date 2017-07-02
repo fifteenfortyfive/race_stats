@@ -66,25 +66,25 @@
           <span class="team-name">The Happy Little Speed Runners</span>
           <span class="estimate">Estimate: 3:45:00</span>
         </div>
-
       </div>
 
 
       <div class="stats">
         <div class="teams">
           <% runs_by_teams.each do |team, team_runs| %>
+            <% current_run = team_runs[team.current_run.as(Int32)] %>
             <div class="team" id="team<%= team.id %>">
               <header>
                 <div class="meta">
                   <span class="name"><%= team.name %></span>
-                  <span class="current-game">Crash 2</span>
+                  <span class="current-game"><%= current_run.game.name %></span>
                   by
-                  <span class="current-runner">notvanni</span>
+                  <span class="current-runner"><%= current_run.runner.name %></span>
                 </div>
 
                 <div class="current-run">
-                  <span class="time">0:58:17</span>
-                  <span class="progress">Progress: 87 of 100%</span>
+                  <span class="time"><%= Time::Span.from(current_run.start_time || 0, Time::Span::TicksPerSecond) %></span>
+                  <span class="progress">Progress: <%= current_run.progress %> of <%= current_run.game.progress_target %></span>
                 </div>
               </header>
 

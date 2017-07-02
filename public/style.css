@@ -190,7 +190,7 @@ body {
 .stats .teams .team .games-table .series {
   display: block;
   flex: 1 1 25%;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 .stats .teams .team .games-table .series:last-child {
