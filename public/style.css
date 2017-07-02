@@ -1,17 +1,154 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
+  width: 1280px;
+  height: 720px;
   font-family: proxima-nova;
+  margin: 0;
+  padding: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template: repeat(6, 120px) / repeat(4, 215px) 420px;
+}
+
+.race-info {
+  grid-column: 1 / span 4;
+  grid-row: 1 / 1;
+  margin: 5px 20px;
+}
+
+.race-info .title {
+  font-weight: bold;
+  font-size: 110px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  line-height: 1em;
+}
+
+.race-info .timer {
+  display: inline-block;
+  margin-left: 150px;
+  text-align: right;
+}
+
+.race-info .timer .timer-title {
+  text-transform: uppercase;
+  font-size: 30px;
+  display: block;
+  color: #555;
+  line-height: 1em;
+}
+.race-info .timer .timer-time {
+  font-size: 48px;
+  display: block;
+  font-weight: bold;
+}
+
+
+.videos {
+  grid-column: 1 / span 4;
+  grid-row: 2 / span 4;
+}
+
+
+.schedule-ticker {
+  width: 100%;
+  margin: 5px 10px;
+}
+
+.coming-up {
+  grid-column: 1 / span 3;
+  grid-row: 6 / 6;
+}
+
+.featured {
+  grid-column: 4 / span 1;
+  grid-row: 6 / 6;
+}
+
+
+.schedule-ticker h2 {
+  text-transform: uppercase;
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+
+.schedule-ticker h2 small {
+  font-weight: normal;
+  color: #777;
+  font-size: 16px;
+  display: block;
+}
+
+.schedule-element {
+  display: inline-block;
+  width: 210px;
+  color: #777;
+  font-size: 14px;
+}
+
+.schedule-element .team-name {
+  display: block;
+  color: #333;
+}
+
+.schedule-element .game {
+  color: #000;
+  font-weight: bold;
+}
+
+.schedule-element .runner {
+  color: #000;
+  font-weight: bold;
+}
+
+.schedule-element .start-time {
+  display: block;
+}
+
+.featured .schedule-element .runner {
+  display: block;
+}
+
+.featured .schedule-element .estimate {
+  display: block;
+}
+
+
+
+
+.stats {
+  grid-column: 5;
+  grid-row: 1 / span 6;
 }
 
 .stats .teams .team {
-  width: 480px;
-  font-size: 14px;
-  margin: 8px 0;
+  width: 420px;
+  height: 120px;
+  font-size: 12px;
+  padding: 8px;
+}
+
+.stats .teams .team#team1 { background-image: url('assets/red_background.png'); }
+.stats .teams .team#team2 { background-image: url('assets/orange_background.png'); }
+.stats .teams .team#team3 { background-image: url('assets/yellow_background.png'); }
+.stats .teams .team#team4 { background-image: url('assets/green_background.png'); }
+.stats .teams .team#team5 { background-image: url('assets/blue_background.png'); }
+.stats .teams .team#team6 { background-image: url('assets/purple_background.png'); }
+
+.stats .teams .team header {
+  height: 40px;
+  margin-bottom: 5px;
 }
 
 .stats .teams .team .meta {
   float: right;
   text-align: right;
-  font-size: 20px;
+  font-size: 18px;
   color: #777;
 }
 
@@ -20,6 +157,7 @@ body {
   font-size: 18px;
   font-weight: bold;
   color: #000;
+  line-height: 1em;
 }
 
 .stats .teams .team .meta .current-runner {
@@ -33,11 +171,13 @@ body {
 .stats .teams .team .current-run .time {
   font-size: 24px;
   display: block;
+  line-height: 1em;
 }
 
 .stats .teams .team .current-run .progress {
   font-size: 14px;
   color: #777;
+  line-height: 1em;
 }
 
 

@@ -12,3 +12,5 @@ module Repo
     #  checkout_timeout, retry_attempts, and retry_delay
   end
 end
+
+Query = Crecto::Repo::Query
