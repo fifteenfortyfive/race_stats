@@ -12,11 +12,11 @@ body {
 
 .layout {
   display: grid;
-  grid-template: repeat(6, 120px) / repeat(4, 215px) 420px;
+  grid-template: repeat(6, 120px) / repeat(5, 172px) 420px;
 }
 
 .race-info {
-  grid-column: 1 / span 4;
+  grid-column: 1 / span 5;
   grid-row: 1 / 1;
   margin: 5px 20px;
 }
@@ -50,14 +50,16 @@ body {
 
 
 .videos {
-  grid-column: 1 / span 4;
+  grid-column: 1 / span 5;
   grid-row: 2 / span 4;
 }
 
 
 .schedule-ticker {
   width: 100%;
-  margin: 5px 10px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .coming-up {
@@ -66,7 +68,7 @@ body {
 }
 
 .featured {
-  grid-column: 4 / span 1;
+  grid-column: 4 / span 2;
   grid-row: 6 / 6;
 }
 
@@ -110,8 +112,8 @@ body {
   display: block;
 }
 
-.featured .schedule-element .runner {
-  display: block;
+.featured .schedule-element {
+  width: 320px;
 }
 
 .featured .schedule-element .estimate {
@@ -122,7 +124,7 @@ body {
 
 
 .stats {
-  grid-column: 5;
+  grid-column: 6;
   grid-row: 1 / span 6;
 }
 
