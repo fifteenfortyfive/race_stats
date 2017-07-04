@@ -57,9 +57,19 @@ body {
 }
 
 
-.videos {
+.video {
   grid-column: 1 / span 5;
   grid-row: 2 / span 4;
+}
+
+.video iframe {
+  position: absolute;
+  border: none;
+  overflow: hidden;
+}
+
+.video iframe.hidden {
+  opacity: 0;
 }
 
 

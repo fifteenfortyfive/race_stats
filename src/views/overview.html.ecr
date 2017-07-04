@@ -11,15 +11,8 @@
 
   <body>
     <div class="layout">
-      <div class="videos bordered-element">
-        <iframe
-            src="http://player.twitch.tv/?channel=gamesdonequick&muted=true&autoplay=false"
-            width="860"
-            height="480"
-            frameborder="0"
-            scrolling="no"
-            allowfullscreen="true">
-        </iframe>
+      <div class="video bordered-element" id="video_container">
+        <iframe frameborder="0" scrolling="0"></iframe>
       </div>
 
       <div class="race-info bordered-element">
@@ -49,7 +42,7 @@
       <div class="schedule-ticker featured bordered-element">
         <h2>On Screen <small>Rotates every 10 minutes</small></h2>
 
-          <div class="schedule-element">
+          <div class="schedule-element" id="on_screen_container">
             <span class="runner">ConklesToTheMax</span>
             running <span class="game">Kazooie</span>
             <span class="team-name">The Happy Little Speed Runners</span>
@@ -101,4 +94,6 @@
   <script src="moment.min.js"></script>
   <script src="nanoajax.min.js"></script>
   <script src="coming_up.js"></script>
+  <script src="on_screen.js"></script>
+  <script src="layout.js"></script>
 </html>

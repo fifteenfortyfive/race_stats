@@ -1,61 +1,81 @@
-let coming_up_container = document.querySelector("#coming_up_container .schedule-elements");
-let coming_up_template = document.querySelector("#coming_up_element_template");
+class ComingUp {
+  constructor(container, template) {
+    this.container = container;
+    this.template = template.content;
 
-// A list of Run objects for runs that are coming up next. These are iterated
-// in the "Coming Up" ticker at the bottom of the layout.
-let coming_up_list = [];
+    // A list of Run objects for runs that are coming up next. These are iterated
+    // in the "Coming Up" ticker at the bottom of the layout.
+    this.coming_up_list = [];
 
-function shift_displayed_runs() {
-  let currently_displayed = coming_up_container.querySelectorAll(".schedule-element");
+    this.update_coming_up_list();
+    // Update the "coming up" list once per minute
+    setInterval(this.update_coming_up_list.bind(this), 60*1000);
+    // Shift the "Coming Up" ticker every 10 seconds.
+    setInterval(this.iterate.bind(this), 2 * 1000);
+  }
 
-  // If too few runs remain to display, re-add the current list of runs.
-  if(currently_displayed.length <= 3) {
-    coming_up_list.forEach(function(run) {
-      // Create a new node with the run's content, add it to the DOM, and
-      // remember it in the currently-displayed list.
-      var element = document.importNode(coming_up_template.content, true);
-      element.querySelector(".game-name").innerText = run.game;
-      element.querySelector(".runner-name").innerText = run.runner;
-      element.querySelector(".team-name").innerText = run.team;
-      element.querySelector(".start-time").innerText = run.estimate.fromNow();
-      coming_up_container.appendChild(element);
+  update_coming_up_list() {
+    let self = this;
+    nanoajax.ajax({ url: '/api/coming_up', method: 'GET' }, function(code, response) {
+      let json_response = JSON.parse(response);
+      let new_runs_list = [];
+      json_response.forEach(function(run) {
+        run.estimate = moment.unix(run.estimate);
+        new_runs_list.push(run);
+      });
+
+      // Replace the coming_up_list entirely.
+      self.coming_up_list = new_runs_list;
+
+      self.iterate();
     });
   }
 
-
-  // Pop the front of the list to fade out the most recent run.
-  let run_to_pop = coming_up_container.querySelectorAll(".schedule-element")[0];
-
-  if(run_to_pop) {
-    // Fade out the existing nodes
-    run_to_pop.classList.add("fade");
-    coming_up_container.classList.add("tickerSlideLeft");
-    setTimeout(function() {
-      run_to_pop.remove();
-      coming_up_container.classList.remove("tickerSlideLeft");
-    }, 1200);
+  // Return the list of `schedule-element`s currently in the DOM.
+  currently_displayed() {
+    return Array.from(this.container.querySelectorAll(".schedule-element"));
   }
-}
 
+  // Create and return a new schedule element from the given run.
+  create_element(run) {
+    var element = document.importNode(this.template, true);
+    element.querySelector(".game-name").innerText = run.game;
+    element.querySelector(".runner-name").innerText = run.runner;
+    element.querySelector(".team-name").innerText = run.team;
+    element.querySelector(".start-time").innerText = run.estimate.fromNow();
 
-function update_coming_up_list() {
-  nanoajax.ajax({ url: '/api/coming_up', method: 'GET' }, function(code, response) {
-    let json_response = JSON.parse(response);
-    let new_runs_list = [];
-    json_response.forEach(function(run) {
-      run.estimate = moment.unix(run.estimate);
-      new_runs_list.push(run);
-    });
+    return element;
+  }
 
-    // Replace the coming_up_list entirely.
-    coming_up_list = new_runs_list;
+  // This will remove the first `schedule-element` from the DOM after the
+  // animation completes.
+  iterate() {
+    let self = this;
+    // If too few runs remain to display, re-add the current list of runs.
+    if(self.currently_displayed().length <= 3) {
+      self.coming_up_list.forEach(function(run) {
+        let element = self.create_element(run);
+        self.container.appendChild(element);
+      });
+    }
 
-    shift_displayed_runs();
-  });
+    self.animate_out();
+  }
+
+  // Animate moving to the next run.
+  animate_out() {
+    let self = this;
+    // Pop the front of the list to fade out the most recent run.
+    let run_to_pop = self.container.querySelectorAll(".schedule-element")[0];
+
+    if(run_to_pop) {
+      // Fade out the existing nodes
+      run_to_pop.classList.add("fade");
+      self.container.classList.add("tickerSlideLeft");
+      setTimeout(function() {
+        run_to_pop.remove();
+        self.container.classList.remove("tickerSlideLeft");
+      }, 1200);
+    }
+  }
 };
-
-update_coming_up_list();
-// Update the "coming up" list once per minute
-setInterval(update_coming_up_list, 60*1000);
-// Shift the "Coming Up" ticker every 10 seconds.
-setInterval(shift_displayed_runs, 10000);

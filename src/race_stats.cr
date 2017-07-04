@@ -17,6 +17,7 @@ get "/runner" do
   render "src/views/runner_screen.html.ecr"
 end
 
+
 get "/api/coming_up" do |env|
   env.response.content_type = "application/json"
 
@@ -35,5 +36,19 @@ get "/api/coming_up" do |env|
     end
   end
 end
+
+
+get "/api/on_screen" do |env|
+  env.response.content_type = "application/json"
+
+  {
+    "channel"   =>  ["gamesdonequick", "KrisMarqz", "notvanni"].sample,
+    "runner"    =>  "ConklesToTheMax",
+    "game"      =>  "Kazooie",
+    "team"      =>  "The Happy Little Speed Runners",
+    "estimate"  =>  "13500"
+  }.to_json
+end
+
 
 Kemal.run
