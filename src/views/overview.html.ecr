@@ -5,6 +5,7 @@
       try{Typekit.load({ async: true });}catch(e){}
     </script>
 
+    <link rel="stylesheet" href="animate.css">
     <link rel="stylesheet" href="style.css">
   </head>
 
@@ -29,43 +30,31 @@
         </span>
       </div>
 
-      <div class="schedule-ticker coming-up bordered-element">
+      <div class="schedule-ticker coming-up bordered-element" id="coming_up_container">
         <h2>Coming Up <small>Times are in UTC</small></h2>
 
-        <div class="schedule-element">
-          <span class="game">SM64</span>
-          by
-          <span class="runner">Muimania</span>
-          <span class="team-name">Anything But Last</span>
-          <span class="start-time">around 10:15pm</span>
-        </div>
-
-        <div class="schedule-element">
-          <span class="game">Crash 2</span>
-          by
-          <span class="runner">HolySanctum</span>
-          <span class="team-name">Team Mornin'</span>
-          <span class="start-time">around 11:23pm</span>
-        </div>
-
-        <div class="schedule-element">
-          <span class="game">DK64</span>
-          by
-          <span class="runner">Kiwikiller67</span>
-          <span class="team-name">Anything But Last</span>
-          <span class="start-time">around 12:11am</span>
+        <template id="coming_up_element_template">
+          <div class="schedule-element">
+            <span class="game-name"></span>
+            by
+            <span class="runner-name"></span>
+            <span class="team-name"></span>
+            <span class="start-time"></span>
+          </div>
+        </template>
+        <div class="schedule-elements animated">
         </div>
       </div>
 
       <div class="schedule-ticker featured bordered-element">
         <h2>On Screen <small>Rotates every 10 minutes</small></h2>
 
-        <div class="schedule-element">
-          <span class="runner">ConklesToTheMax</span>
-          running <span class="game">Kazooie</span>
-          <span class="team-name">The Happy Little Speed Runners</span>
-          <span class="estimate">Estimate: 3:45:00</span>
-        </div>
+          <div class="schedule-element">
+            <span class="runner">ConklesToTheMax</span>
+            running <span class="game">Kazooie</span>
+            <span class="team-name">The Happy Little Speed Runners</span>
+            <span class="estimate">Estimate: 3:45:00</span>
+          </div>
       </div>
 
 
@@ -108,4 +97,8 @@
       <% end %>
     </div>
   </body>
+
+  <script src="moment.min.js"></script>
+  <script src="nanoajax.min.js"></script>
+  <script src="coming_up.js"></script>
 </html>

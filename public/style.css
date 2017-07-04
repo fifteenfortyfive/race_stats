@@ -106,12 +106,12 @@ body {
   color: #aaa;
 }
 
-.schedule-element .game {
+.schedule-element .game-name {
   color: #faeced;
   font-weight: bold;
 }
 
-.schedule-element .runner {
+.schedule-element .runner-name {
   color: #faeced;
   font-weight: bold;
 }
@@ -188,7 +188,7 @@ body {
 .team .current-run .progress {
   font-size: 14px;
   color: #777;
-  line-height: 1em;
+  line-height: 1.1em;
 }
 
 
@@ -229,4 +229,31 @@ body {
   display: inline-block;
   text-align: right;
   flex: 1 1 auto;
+}
+
+
+// Animations
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes tickerSlideLeft {
+  to {
+    transform: translate3d(-214px, 0, 0);
+  }
+}
+
+.tickerSlideLeft {
+  animation-name: tickerSlideLeft;
+}
+
+.fade {
+  animation-name: fade;
 }

@@ -78,7 +78,8 @@ CREATE SEQUENCE teams_id_seq
 ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
 ALTER TABLE ONLY teams ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regclass);
-CREATE UNIQUE INDEX teams_4ijlkjdf ON runners (id);
+CREATE UNIQUE INDEX teams_4ijlkjdf ON teams (id);
+
 
 
 -- +micrate Down
