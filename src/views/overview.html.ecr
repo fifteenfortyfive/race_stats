@@ -10,7 +10,7 @@
 
   <body>
     <div class="layout">
-      <div class="videos">
+      <div class="videos bordered-element">
         <iframe
             src="http://player.twitch.tv/?channel=gamesdonequick&muted=true&autoplay=false"
             width="860"
@@ -21,7 +21,7 @@
         </iframe>
       </div>
 
-      <div class="race-info">
+      <div class="race-info bordered-element">
         <span class="title">The 1545</span>
         <span class="timer">
           <span class="timer-title">Elapsed Time</span>
@@ -29,7 +29,7 @@
         </span>
       </div>
 
-      <div class="schedule-ticker coming-up">
+      <div class="schedule-ticker coming-up bordered-element">
         <h2>Coming Up <small>Times are in UTC</small></h2>
 
         <div class="schedule-element">
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="schedule-ticker featured">
+      <div class="schedule-ticker featured bordered-element">
         <h2>On Screen <small>Rotates every 10 minutes</small></h2>
 
         <div class="schedule-element">
@@ -69,47 +69,43 @@
       </div>
 
 
-      <div class="stats">
-        <div class="teams">
-          <% runs_by_teams.each do |team, team_runs| %>
-            <% current_run = team_runs[team.current_run.as(Int32)] %>
-            <div class="team" id="team<%= team.id %>">
-              <header>
-                <div class="meta">
-                  <span class="name"><%= team.name %></span>
-                  <span class="current-game"><%= current_run.game.name %></span>
-                  by
-                  <span class="current-runner"><%= current_run.runner.name %></span>
-                </div>
+      <% runs_by_teams.each do |team, team_runs| %>
+        <% current_run = team_runs[team.current_run.as(Int32)] %>
+        <div class="team bordered-element" id="team<%= team.id %>">
+          <header>
+            <div class="meta">
+              <span class="name"><%= team.name %></span>
+              <span class="current-game"><%= current_run.game.name %></span>
+              by
+              <span class="current-runner"><%= current_run.runner.name %></span>
+            </div>
 
-                <div class="current-run">
-                  <span class="time"><%= Time::Span.from(current_run.start_time || 0, Time::Span::TicksPerSecond) %></span>
-                  <span class="progress">Progress: <%= current_run.progress %> of <%= current_run.game.progress_target %></span>
-                </div>
-              </header>
+            <div class="current-run">
+              <span class="time"><%= Time::Span.from(current_run.start_time || 0, Time::Span::TicksPerSecond) %></span>
+              <span class="progress">Progress: <%= current_run.progress %> of <%= current_run.game.progress_target %></span>
+            </div>
+          </header>
 
 
-              <footer>
-                <div class="games-table">
-                  <% runs = team_runs.group_by{ |r| r.game.series } %>
-                  <% series_order = ["mario", "rare", "spyro", "crash"] %>
-                  <% series_order.each do |series_name| %>
-                    <% ordered_runs_for_series = runs[series_name].sort_by{ |r| r.game.sequence_number.not_nil! } %>
-                    <div class="series <%= series_name %>">
-                      <% ordered_runs_for_series.each do |run| %>
-                        <div class="game <%= run.game.name.not_nil!.downcase.gsub(' ', "") %>">
-                          <span class="game-name"><%= run.game.name %></span>
-                          <span class="game-time"><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span>
-                        </div>
-                      <% end %>
+          <footer>
+            <div class="games-table">
+              <% runs = team_runs.group_by{ |r| r.game.series } %>
+              <% series_order = ["mario", "rare", "spyro", "crash"] %>
+              <% series_order.each do |series_name| %>
+                <% ordered_runs_for_series = runs[series_name].sort_by{ |r| r.game.sequence_number.not_nil! } %>
+                <div class="series <%= series_name %>">
+                  <% ordered_runs_for_series.each do |run| %>
+                    <div class="game <%= run.game.name.not_nil!.downcase.gsub(' ', "") %>">
+                      <span class="game-name"><%= run.game.name %></span>
+                      <span class="game-time"><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span>
                     </div>
                   <% end %>
                 </div>
-              </footer>
+              <% end %>
             </div>
-          <% end %>
+          </footer>
         </div>
-      </div>
+      <% end %>
     </div>
   </body>
 </html>

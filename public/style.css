@@ -12,13 +12,17 @@ body {
 
 .layout {
   display: grid;
-  grid-template: repeat(6, 120px) / repeat(5, 172px) 420px;
+  grid-template: repeat(6, 116px) / repeat(5, 167px) 420px;
+  grid-gap: 5px;
+  background-color: #000;
 }
 
 .race-info {
   grid-column: 1 / span 5;
   grid-row: 1 / 1;
-  margin: 5px 20px;
+  padding: 5px 20px;
+  background-color: #8c2429;
+  text-shadow: 0.2em 0.2em 0.4em #771f23;
 }
 
 .race-info .title {
@@ -27,11 +31,13 @@ body {
   margin: 0 0 10px 0;
   padding: 0;
   line-height: 1em;
+  color: #faeced;
 }
 
 .race-info .timer {
-  display: inline-block;
-  margin-left: 150px;
+  display: block;
+  margin-top: 14px;
+  float: right;
   text-align: right;
 }
 
@@ -39,13 +45,15 @@ body {
   text-transform: uppercase;
   font-size: 30px;
   display: block;
-  color: #555;
+  color: #390e10;
+  font-weight: bold;
   line-height: 1em;
 }
 .race-info .timer .timer-time {
   font-size: 48px;
   display: block;
   font-weight: bold;
+  color: #faeced;
 }
 
 
@@ -56,10 +64,10 @@ body {
 
 
 .schedule-ticker {
-  width: 100%;
   padding: 5px 10px;
   white-space: nowrap;
   overflow: hidden;
+  color: #faeced;
 }
 
 .coming-up {
@@ -95,16 +103,16 @@ body {
 
 .schedule-element .team-name {
   display: block;
-  color: #333;
+  color: #aaa;
 }
 
 .schedule-element .game {
-  color: #000;
+  color: #faeced;
   font-weight: bold;
 }
 
 .schedule-element .runner {
-  color: #000;
+  color: #faeced;
   font-weight: bold;
 }
 
@@ -124,98 +132,99 @@ body {
 
 
 .stats {
-  grid-column: 6;
-  grid-row: 1 / span 6;
+  /*grid-row: 1 / span 6;*/
 }
 
-.stats .teams .team {
-  width: 420px;
-  height: 120px;
+.team {
+  grid-column: 6;
+  grid-row: span 1;
+  width: 100%;
+  height: 100%;
   font-size: 12px;
   padding: 8px;
 }
 
-.stats .teams .team#team1 { background-image: url('assets/red_background.png'); }
-.stats .teams .team#team2 { background-image: url('assets/orange_background.png'); }
-.stats .teams .team#team3 { background-image: url('assets/yellow_background.png'); }
-.stats .teams .team#team4 { background-image: url('assets/green_background.png'); }
-.stats .teams .team#team5 { background-image: url('assets/blue_background.png'); }
-.stats .teams .team#team6 { background-image: url('assets/purple_background.png'); }
+.team#team1 { background-image: url('assets/red_background.png'); }
+.team#team2 { background-image: url('assets/orange_background.png'); }
+.team#team3 { background-image: url('assets/yellow_background.png'); }
+.team#team4 { background-image: url('assets/green_background.png'); }
+.team#team5 { background-image: url('assets/blue_background.png'); }
+.team#team6 { background-image: url('assets/purple_background.png'); }
 
-.stats .teams .team header {
+.team header {
   height: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
-.stats .teams .team .meta {
+.team .meta {
   float: right;
   text-align: right;
-  font-size: 18px;
+  font-size: 20px;
   color: #777;
 }
 
-.stats .teams .team .meta .name {
+.team .meta .name {
   display: block;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   color: #000;
-  line-height: 1em;
+  line-height: 1.3em;
 }
 
-.stats .teams .team .meta .current-runner {
+.team .meta .current-runner {
   color: #333;
 }
 
-.stats .teams .team .meta .current-game {
+.team .meta .current-game {
   color: #333;
 }
 
-.stats .teams .team .current-run .time {
+.team .current-run .time {
   font-size: 24px;
   display: block;
   line-height: 1em;
 }
 
-.stats .teams .team .current-run .progress {
+.team .current-run .progress {
   font-size: 14px;
   color: #777;
   line-height: 1em;
 }
 
 
-.stats .teams .team .games-table {
+.team .games-table {
   width: 100%;
   display: flex;
   align-items: flex-end;
 }
 
-.stats .teams .team .games-table .series {
+.team .games-table .series {
   display: block;
   flex: 1 1 25%;
   margin-right: 4px;
 }
 
-.stats .teams .team .games-table .series:last-child {
+.team .games-table .series:last-child {
   margin-right: 0;
 }
 
-.stats .teams .team .games-table .series.mario {
+.team .games-table .series.mario {
   flex: 1 1 27%;
 }
 
-.stats .teams .team .games-table .series .game {
+.team .games-table .series .game {
   width: 100%;
   display: flex;
 }
 
-.stats .teams .team .games-table .series .game-name {
+.team .games-table .series .game-name {
   text-align: left;
   font-weight: bold;
   display: inline-block;
   flex: 1 1 auto;
 }
 
-.stats .teams .team .games-table .series .game-time {
+.team .games-table .series .game-time {
   font-weight: normal;
   display: inline-block;
   text-align: right;
