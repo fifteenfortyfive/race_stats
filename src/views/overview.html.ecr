@@ -11,11 +11,11 @@
 
   <body>
     <div class="layout">
-      <div class="video bordered-element" id="video_container">
+      <div class="video" id="video_container">
         <iframe frameborder="0" scrolling="0"></iframe>
       </div>
 
-      <div class="race-info bordered-element">
+      <div class="race-info">
         <span class="title">The 1545</span>
         <span class="timer">
           <span class="timer-title">Elapsed Time</span>
@@ -23,7 +23,7 @@
         </span>
       </div>
 
-      <div class="schedule-ticker coming-up bordered-element" id="coming_up_container">
+      <div class="schedule-ticker coming-up" id="coming_up_container">
         <h2>Coming Up <small>Times are in UTC</small></h2>
 
         <template id="coming_up_element_template">
@@ -39,61 +39,115 @@
         </div>
       </div>
 
-      <div class="schedule-ticker featured bordered-element">
+      <div class="schedule-ticker featured">
         <h2>On Screen <small>Rotates every 10 minutes</small></h2>
 
-          <div class="schedule-element" id="on_screen_container">
-            <span class="runner">ConklesToTheMax</span>
-            running <span class="game">Kazooie</span>
-            <span class="team-name">The Happy Little Speed Runners</span>
-            <span class="estimate">Estimate: 3:45:00</span>
-          </div>
+        <div class="schedule-element" id="on_screen_container">
+          <span class="runner">ConklesToTheMax</span>
+          running <span class="game">Kazooie</span>
+          <span class="team-name">The Happy Little Speed Runners</span>
+          <span class="estimate">Estimate: 3:45:00</span>
+        </div>
       </div>
 
 
-      <% runs_by_teams.each do |team, team_runs| %>
-        <% current_run = team_runs[team.current_run.as(Int32)] %>
-        <div class="team bordered-element" id="team<%= team.id %>">
+      <template id="team_stats_template">
+        <div class="team animated fadeIn">
           <header>
             <div class="meta">
-              <span class="name"><%= team.name %></span>
-              <span class="current-game"><%= current_run.game.name %></span>
+              <span class="name">Team name</span>
+              <span class="current-game">Current Game</span>
               by
-              <span class="current-runner"><%= current_run.runner.name %></span>
+              <span class="current-runner">Current Runner</span>
             </div>
 
             <div class="current-run">
-              <span class="time"><%= Time::Span.from(current_run.start_time || 0, Time::Span::TicksPerSecond) %></span>
-              <span class="progress">Progress: <%= current_run.progress %> of <%= current_run.game.progress_target %></span>
+              <span class="time">00:00:00</span>
+              <span class="progress">
+                <span class="progress-current"></span>
+                of
+                <span class="progress-target"></span>
             </div>
           </header>
 
 
           <footer>
             <div class="games-table">
-              <% runs = team_runs.group_by{ |r| r.game.series } %>
-              <% series_order = ["mario", "rare", "spyro", "crash"] %>
-              <% series_order.each do |series_name| %>
-                <% ordered_runs_for_series = runs[series_name].sort_by{ |r| r.game.sequence_number.not_nil! } %>
-                <div class="series <%= series_name %>">
-                  <% ordered_runs_for_series.each do |run| %>
-                    <div class="game <%= run.game.name.not_nil!.downcase.gsub(' ', "") %>">
-                      <span class="game-name"><%= run.game.name %></span>
-                      <span class="game-time"><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span>
-                    </div>
-                  <% end %>
+              <div class="series mario">
+                <div class="game sm64">
+                  <span class="game-name">SM64</span>
+                  <span class="game-time">00:00:00</span>
                 </div>
-              <% end %>
+                <div class="game sunshine">
+                  <span class="game-name">Sunshine</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game galaxy1">
+                  <span class="game-name">Galaxy 1</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game galaxy2">
+                  <span class="game-name">Galaxy 2</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+              </div>
+
+              <div class="series rare">
+                <div class="game kazooie">
+                  <span class="game-name">Kazooie</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game tooie">
+                  <span class="game-name">Tooie</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game dk64">
+                  <span class="game-name">DK64</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+              </div>
+
+              <div class="series spyro">
+                <div class="game spyro1">
+                  <span class="game-name">Spyro 1</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game spyro2">
+                  <span class="game-name">Spyro 2</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game spyro3">
+                  <span class="game-name">Spyro 3</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+              </div>
+
+              <div class="series crash">
+                <div class="game crash1">
+                  <span class="game-name">Crash 1</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game crash2">
+                  <span class="game-name">Crash 2</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+                <div class="game crash3">
+                  <span class="game-name">Crash 3</span>
+                  <span class="game-time">00:00:00</span>
+                </div>
+              </div>
             </div>
           </footer>
         </div>
-      <% end %>
+      </template>
     </div>
   </body>
 
   <script src="moment.min.js"></script>
+  <script src="moment-duration-format.js"></script>
   <script src="nanoajax.min.js"></script>
   <script src="coming_up.js"></script>
   <script src="on_screen.js"></script>
+  <script src="teams.js"></script>
   <script src="layout.js"></script>
 </html>

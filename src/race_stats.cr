@@ -5,6 +5,13 @@ require "kemal"
 require "./repo"
 require "./race_stats/*"
 
+ws "/teams" do |socket|
+  SocketManager.add_listener(socket)
+  socket.on_close do
+    SocketManager.remove_listener(socket)
+  end
+end
+
 
 get "/" do
   _all_runs = Repo.all(Run, Query.order_by("schedule_number ASC"), preload: [:team, :runner, :game])
@@ -42,7 +49,7 @@ get "/api/on_screen" do |env|
   env.response.content_type = "application/json"
 
   {
-    "channel"   =>  ["gamesdonequick", "KrisMarqz", "notvanni"].sample,
+    "channel"   =>  ["gamesdonequick", "superiorwarbringer"].sample,
     "runner"    =>  "ConklesToTheMax",
     "game"      =>  "Kazooie",
     "team"      =>  "The Happy Little Speed Runners",

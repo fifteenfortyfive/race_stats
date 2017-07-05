@@ -384,7 +384,7 @@ Repo.insert(Run.new(wedc517,          spyro3,    8, Time::Span.new( 3, 40,  0).t
 Repo.insert(Run.new(claire,           sunshine,  9, Time::Span.new( 3, 45,  0).to_i))
 Repo.insert(Run.new(claire,           galaxy2,  10, Time::Span.new(10, 15,  0).to_i))
 Repo.insert(Run.new(zacho,            spyro1,   11, Time::Span.new( 2, 30,  0).to_i))
-Repo.insert(Run.new(sonicboomsensei,  galaxy2,  12, Time::Span.new( 7, 30,  0).to_i))
+Repo.insert(Run.new(sonicboomsensei,  galaxy1,  12, Time::Span.new( 7, 30,  0).to_i))
 Repo.insert(Run.new(connor75,         dk64,     13, Time::Span.new( 5, 40,  0).to_i))
 
 

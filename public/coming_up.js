@@ -11,7 +11,7 @@ class ComingUp {
     // Update the "coming up" list once per minute
     setInterval(this.update_coming_up_list.bind(this), 60*1000);
     // Shift the "Coming Up" ticker every 10 seconds.
-    setInterval(this.iterate.bind(this), 2 * 1000);
+    setInterval(this.iterate.bind(this), 5 * 1000);
   }
 
   update_coming_up_list() {
