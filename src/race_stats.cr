@@ -45,13 +45,25 @@ get "/api/coming_up" do |env|
   end
 end
 
+
+previously_displayed_run = nil
+
 get "/api/on_screen" do |env|
+  runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL"), preload: [:runner, :team, :game])
+
+  run_to_display = runs.sample
+  until run_to_display != previously_displayed_run
+    run_to_display = runs.sample
+  end
+
+  previously_displayed_run = run_to_display
+
   {
     "channel"   =>  ["gamesdonequick", "superiorwarbringer"].sample,
-    "runner"    =>  "ConklesToTheMax",
-    "game"      =>  "Kazooie",
-    "team"      =>  "The Happy Little Speed Runners",
-    "estimate"  =>  "13500"
+    "runner"    =>  run_to_display.runner.name,
+    "game"      =>  run_to_display.game.name,
+    "team"      =>  run_to_display.team.name,
+    "estimate"  =>  run_to_display.estimate
   }.to_json
 end
 
