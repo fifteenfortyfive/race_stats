@@ -20,12 +20,17 @@ class Teams {
             }
 
             let current_run = team.runs[team.current_run];
-            console.log(current_run);
             element.querySelector('header .meta .name').innerText = team_name;
             element.querySelector('header .meta .current-game').innerText = current_run.game;
             element.querySelector('header .meta .current-runner').innerText = current_run.runner;
 
-            element.querySelector('header .current-run .time').innerText = moment.duration(current_run.time, 'seconds').format("hh:mm:ss", { trim: false });
+            let time_element = element.querySelector('header .current-run .time');
+            time_element.innerText = moment.duration(current_run.time, 'seconds').format("hh:mm:ss", { trim: false });
+            if(current_run.in_progress) {
+              time_element.classList.add('updated-timer');
+            } else {
+              time_element.classList.remove('updated-timer');
+            }
             element.querySelector('header .current-run .progress .progress-current').innerText = current_run.progress;
             element.querySelector('header .current-run .progress .progress-target').innerText = current_run.progress_target;
 

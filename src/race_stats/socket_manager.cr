@@ -50,6 +50,7 @@ def get_team_statuses
                           json.field :progress, run.progress
                           json.field :progress_target, run.game.progress_target
                           json.field :finished, run.finished?
+                          json.field :in_progress, run.in_progress?
                         end
                       end
                     end

@@ -19,7 +19,7 @@
         <span class="title">The 1545</span>
         <span class="timer">
           <span class="timer-title">Elapsed Time</span>
-          <span class="timer-time">38:15:54</span>
+          <span class="timer-time updated-timer">38:15:54</span>
         </span>
       </div>
 
@@ -42,11 +42,13 @@
       <div class="schedule-ticker featured">
         <h2>On Screen <small>Rotates every 10 minutes</small></h2>
 
-        <div class="schedule-element" id="on_screen_container">
-          <span class="runner">ConklesToTheMax</span>
-          running <span class="game">Kazooie</span>
-          <span class="team-name">The Happy Little Speed Runners</span>
-          <span class="estimate">Estimate: 3:45:00</span>
+        <div id="on_screen_container">
+          <div class="schedule-element hidden">
+            <span class="runner">ConklesToTheMax</span>
+            running <span class="game">Kazooie</span>
+            <span class="team-name">The Happy Little Speed Runners</span>
+            <span class="estimate">Estimate: <span class="estimate-time">3:45:00</span></span>
+          </div>
         </div>
       </div>
 
@@ -62,7 +64,7 @@
             </div>
 
             <div class="current-run">
-              <span class="time">00:00:00</span>
+              <span class="time updated-timer">00:00:00</span>
               <span class="progress">
                 <span class="progress-current"></span>
                 of
@@ -150,4 +152,5 @@
   <script src="on_screen.js"></script>
   <script src="teams.js"></script>
   <script src="layout.js"></script>
+  <script src="timers.js"></script>
 </html>

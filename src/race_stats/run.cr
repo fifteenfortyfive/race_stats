@@ -28,4 +28,9 @@ class Run < Crecto::Model
   def finished?
     !!finish_time
   end
+
+  # Returns true if the run has started, but not yet finished.
+  def in_progress?
+    !!start_time && !finish_time
+  end
 end

@@ -69,7 +69,7 @@ body {
   overflow: hidden;
 }
 
-.video iframe.hidden {
+.hidden {
   opacity: 0;
 }
 
@@ -89,6 +89,10 @@ body {
 .featured {
   grid-column: 4 / span 2;
   grid-row: 6 / 6;
+}
+
+.featured .schedule-element {
+  position: absolute;
 }
 
 

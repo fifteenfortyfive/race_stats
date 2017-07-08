@@ -12,27 +12,35 @@ class OnScreen {
   attempt_transition() {
     let self = this;
     nanoajax.ajax({ url: '/api/on_screen', method: 'GET' }, function(code, response) {
-      let old_video = self.on_screen;
-      let new_video = JSON.parse(response);
-      if(old_video != new_video) {
-        self.transition_to(new_video);
+      let old_on_screen = self.on_screen;
+      let new_on_screen = JSON.parse(response);
+      if(old_on_screen != new_on_screen) {
+        self.transition_to(new_on_screen);
       }
     });
   }
 
   // This will remove the first `schedule-element` from the DOM after the
   // animation completes.
-  transition_to(new_video) {
+  transition_to(new_on_screen) {
     let self = this;
     let old_video = self.video_container.querySelector("iframe");
     // Create a new video frame to transition to.
     let video_frame = document.createElement('iframe');
-    video_frame.src = `http://player.twitch.tv/?channel=${new_video.channel}&muted=true&controls=false`
+    video_frame.src = `http://player.twitch.tv/?channel=${new_on_screen.channel}&muted=true&controls=false`
     video_frame.width = "856";
     video_frame.height = "479";
     video_frame.allowfullscreen = "true";
     video_frame.classList.add("hidden");
     self.video_container.appendChild(video_frame);
+    // Create a new description element to transition to
+    let old_text = this.text_container.querySelector('.schedule-element');
+    let new_text = old_text.cloneNode(true);
+    new_text.querySelector('.runner').innerText = new_on_screen.runner;
+    new_text.querySelector('.game').innerText = new_on_screen.game;
+    new_text.querySelector('.team-name').innerText = new_on_screen.team;
+    new_text.querySelector('.estimate-time').innerText = moment.duration(parseInt(new_on_screen.estimate), 's').format('hh:mm:ss');
+    self.text_container.appendChild(new_text);
 
     // Wait a while to let the player load before fading to it.
     setTimeout(function() {
@@ -43,10 +51,19 @@ class OnScreen {
       video_frame.classList.add("fadeIn");
       video_frame.classList.remove("hidden");
 
+      old_text.classList.remove("fadeIn");
+      old_text.classList.add("animated");
+      old_text.classList.add("fadeOut");
+      new_text.classList.add("animated");
+      new_text.classList.add("fadeIn");
+      new_text.classList.remove("hidden");
+
+
       setTimeout(function() {
         old_video.remove();
+        old_text.remove();
         // Update the `on_screen` reference after the transition has completed.
-        self.on_screen = new_video;
+        self.on_screen = new_on_screen;
       }, 1500);
     }, 4000);
   }

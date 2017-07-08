@@ -1,5 +1,15 @@
 <html>
   <body>
+    <h2><%= runner.name %></h2>
+
+    <div class="runs">
+      <div class="run">
+        <% runs.each do |run| %>
+          <h2><%= run.game.name %></h2>
+          <p><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></p>
+        <% end %>
+      </div>
+    </div>
     <div class="ticker_box">
       <span class="percentage">86%</span>
       <span class="timer">1:04:23</span>
