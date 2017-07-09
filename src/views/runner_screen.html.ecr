@@ -22,6 +22,9 @@
             of
             <span class="progress-target"><%= run.game.progress_target %></span>
           </span>
+          <span class="splits">
+            Next Split: <span class="current-split"><%= run.splits_json[run.current_split.not_nil!] %></span>
+          </span>
           <div class="run-actions"></div>
         </div>
       <% end %>

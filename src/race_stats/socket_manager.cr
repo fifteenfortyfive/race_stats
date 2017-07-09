@@ -29,7 +29,7 @@ module SocketManager
 
 
   private def get_team_statuses
-    runs_by_team = Repo.all(Run, preload: [:team, :game, :runner]).group_by(&.team)
+    runs_by_team = Repo.all(Run, Query.order_by("id ASC"), preload: [:team, :game, :runner]).group_by(&.team)
 
     JSON.build do |json|
       json.object do

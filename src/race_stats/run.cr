@@ -5,6 +5,8 @@ class Run < Crecto::Model
     field :start_time, Time
     field :finish_time, Time
     field :progress, Int32
+    field :splits, String
+    field :current_split, Int32
 
     belongs_to :team, Team
     belongs_to :runner, Runner
@@ -15,6 +17,10 @@ class Run < Crecto::Model
     self.runner = runner
     self.team_id = runner.team_id
     self.game = game
+  end
+
+  def splits_json
+    @splits_json ||= JSON.parse(self.splits.not_nil!)
   end
 
   def elapsed_time(as_of=Time.new)
@@ -44,7 +50,9 @@ class Run < Crecto::Model
       elapsed_time: elapsed_time,
       progress: progress,
       in_progress: in_progress?,
-      finished: finished?
+      finished: finished?,
+      splits: splits_json,
+      current_split: current_split
     }
   end
 

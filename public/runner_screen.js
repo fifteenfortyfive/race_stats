@@ -38,12 +38,16 @@ class RunnerScreen {
       }
 
       if(run.start_time && !run.finish_time) {
-        run_actions.appendChild(create_action("Add progress", 'increment_progress', run.id));
-        run_actions.appendChild(create_action("Remove progress", 'decrement_progress', run.id));
-        run_actions.appendChild(create_action("Finish run", 'finish', run.id));
+        if(run.current_split == run.splits.length) {
+          run_actions.appendChild(create_action("Finish run", 'finish', run.id));
+        } else {
+          run_actions.appendChild(create_action("Add progress", 'split', run.id));
+        }
+        run_actions.appendChild(create_action("Remove progress", 'unsplit', run.id));
       }
 
       run_element.querySelector(".progress-current").innerText = run.progress;
+      run_element.querySelector(".current-split").innerText = run.current_split == run.splits.length ? "None" : run.splits[run.current_split];
 
       run_element.querySelector(".current-time").innerText = moment.duration(run.elapsed_time, 's').format("hh:mm:ss", { trim: false });
       if(run.in_progress) {

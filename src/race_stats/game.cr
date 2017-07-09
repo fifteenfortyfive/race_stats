@@ -5,6 +5,7 @@ class Game < Crecto::Model
     field :progress_unit, String
     field :progress_max, Int32
     field :sequence_number, Int32
+    field :default_splits, String
 
     has_many :runs, Run
   end
