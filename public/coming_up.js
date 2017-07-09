@@ -20,7 +20,7 @@ class ComingUp {
       let json_response = JSON.parse(response);
       let new_runs_list = [];
       json_response.forEach(function(run) {
-        run.estimate = moment.unix(run.estimate);
+        run.start_time = moment.unix(run.start_time);
         new_runs_list.push(run);
       });
 
@@ -42,7 +42,7 @@ class ComingUp {
     element.querySelector(".game-name").innerText = run.game;
     element.querySelector(".runner-name").innerText = run.runner;
     element.querySelector(".team-name").innerText = run.team;
-    element.querySelector(".start-time").innerText = run.estimate.fromNow();
+    element.querySelector(".start-time").innerText = run.start_time.fromNow();
 
     return element;
   }

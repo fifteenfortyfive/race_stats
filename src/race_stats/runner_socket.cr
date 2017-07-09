@@ -33,9 +33,13 @@ class RunnerSocket
       SocketManager.update_listeners
 
     when "split"
-      run = Repo.get!(Run, msg["run_id"].to_s)
+      run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.current_split = Math.min(run.current_split.not_nil! + 1, run.splits_json.to_a.size)
-      run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
+      if run.game.progress_unit == "%"
+        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
+      else
+        run.progress = run.current_split
+      end
       puts run.current_split
       Repo.update(run)
 
@@ -44,9 +48,13 @@ class RunnerSocket
       SocketManager.update_listeners
 
     when "unsplit"
-      run = Repo.get!(Run, msg["run_id"].to_s)
+      run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.current_split = Math.max(run.current_split.not_nil! - 1, 0)
-      run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
+      if run.game.progress_unit == "%"
+        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
+      else
+        run.progress = run.current_split
+      end
       Repo.update(run)
 
       @socket.send(run.to_json.to_s)

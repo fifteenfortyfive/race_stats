@@ -29,17 +29,38 @@ end
 
 before_all("/api/") { |env| env.response.content_type = "application/json" }
 
+RACE_START_TIME = Time.new(2017, 7, 9, 17, 0, 0)
+
+def calculate_start_time(run : Run)
+  if run.schedule_number == 1
+    return RACE_START_TIME
+  else
+    runs_for_team = Repo.all(Run, Query.where(team_id: run.team_id).order_by("schedule_number ASC")).as(Array(Run))
+    finished_runs = runs_for_team.select{ |r| r.finished? }
+
+    estimated_start = RACE_START_TIME
+    finished_runs.each do |r|
+      estimated_start += Time::Span.from(r.elapsed_time, Time::Span::TicksPerSecond)
+    end
+
+    current_run = runs_for_team[run.team.current_run.not_nil! - 1]
+    estimated_start += Time::Span.from(current_run.estimate.not_nil!, Time::Span::TicksPerSecond)
+    estimated_start
+  end
+end
+
 get "/api/coming_up" do |env|
-  upcoming_runs = Repo.all(Run, Query.where(start_time: nil).order_by("schedule_number ASC"), preload: [:team, :runner, :game]).first(5)
+  next_runs = Repo.all(Run, Query.where(start_time: nil).order_by("schedule_number ASC"), preload: [:team, :runner, :game])
+  next_runs = next_runs.uniq{ |r| r.team_id }
 
   JSON.build do |json|
     json.array do
-      upcoming_runs.each do |run|
+      next_runs.each do |run|
         json.object do
           json.field "runner", run.runner.name
           json.field "game", run.game.name
           json.field "team", run.team.name
-          json.field "estimate", run.estimate
+          json.field "start_time", calculate_start_time(run).epoch
         end
       end
     end

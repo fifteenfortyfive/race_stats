@@ -24,6 +24,8 @@ class Run < Crecto::Model
   end
 
   def elapsed_time(as_of=Time.new)
+    as_of = finish_time.not_nil! if finish_time
+
     if start = start_time
       (as_of - start).total_seconds
     else
