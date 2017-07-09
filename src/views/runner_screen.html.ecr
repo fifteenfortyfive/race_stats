@@ -1,20 +1,40 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="/runner_screen.css">
+
+    <script src='https://use.typekit.net/abb5hmw.js'></script>
+    <script>
+      try{Typekit.load({ async: true });}catch(e){}
+    </script>
+  </head>
+
   <body>
-    <h2><%= runner.name %></h2>
+    <h2 class="runner-name"><%= runner.name %></h2>
 
     <div class="runs">
-      <div class="run">
-        <% runs.each do |run| %>
-          <h2><%= run.game.name %></h2>
-          <p><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></p>
-        <% end %>
-      </div>
-    </div>
-    <div class="ticker_box">
-      <span class="percentage">86%</span>
-      <span class="timer">1:04:23</span>
-      <button>Increment</button>
-      <button>Decrement</button>
+      <% runs.each do |run| %>
+        <div class="run" id="run<%= run.id %>">
+          <h2 class="game-name"><%= run.game.name %></h2>
+          <span class="estimate">Estimate: <%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span>
+          Run Time: <span class="current-time updated-timer"><%= run.elapsed_time %></span>
+          <span class="progress">
+            <span class="progress-current"><%= run.progress %></span>
+            of
+            <span class="progress-target"><%= run.game.progress_target %></span>
+          </span>
+          <div class="run-actions"></div>
+        </div>
+      <% end %>
     </div>
   </body>
+
+  <script src="/moment.min.js"></script>
+  <script src="/moment-duration-format.js"></script>
+  <script src="/timers.js"></script>
+  <script src="/runner_screen.js"></script>
+  <script type="text/javascript">
+    let initial_run_info = <%= runs.map(&.to_h).to_json %>;
+    let screen_manager = new RunnerScreen(document.querySelector('body'));
+    screen_manager.update_runs(initial_run_info);
+  </script>
 </html>

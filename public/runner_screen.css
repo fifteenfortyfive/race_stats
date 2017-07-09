@@ -1,0 +1,37 @@
+body {
+  font-family: proxima-nova;
+}
+
+.runs .run {
+  width: 400px;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.runs .run .game-name {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.estimate {
+  display: block;
+  color: #777;
+}
+
+.progress {
+  display: block;
+}
+
+.run-actions button {
+  margin: 8px 8px 0 0;
+  padding: 8px 12px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.run-actions button:hover {
+  cursor: pointer;
+  background-color: #eee;
+}

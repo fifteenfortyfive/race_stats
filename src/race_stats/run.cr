@@ -33,4 +33,26 @@ class Run < Crecto::Model
   def in_progress?
     !!start_time && !finish_time
   end
+
+  def to_h
+    {
+      id: id,
+      schedule_number: schedule_number,
+      estimate: estimate,
+      start_time: start_time,
+      finish_time: finish_time,
+      elapsed_time: elapsed_time,
+      progress: progress,
+      in_progress: in_progress?,
+      finished: finished?
+    }
+  end
+
+  def to_json
+    to_h.to_json
+  end
+
+  def to_json(io : IO)
+    io << to_json
+  end
 end

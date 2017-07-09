@@ -26,10 +26,11 @@ get "/runner/:name" do |context|
 end
 
 
+
 before_all("/api/") { |env| env.response.content_type = "application/json" }
 
 get "/api/coming_up" do |env|
-  upcoming_runs = Repo.all(Run, Query.order_by("schedule_number ASC"), preload: [:team, :runner, :game]).first(5)
+  upcoming_runs = Repo.all(Run, Query.where(start_time: nil).order_by("schedule_number ASC"), preload: [:team, :runner, :game]).first(5)
 
   JSON.build do |json|
     json.array do
@@ -45,39 +46,33 @@ get "/api/coming_up" do |env|
   end
 end
 
-
 previously_displayed_run = nil
 
 get "/api/on_screen" do |env|
   runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL"), preload: [:runner, :team, :game])
-
-  run_to_display = runs.sample
-  until run_to_display != previously_displayed_run
+  if runs.empty?
+    "no runs to display"
+  else
     run_to_display = runs.sample
+    until run_to_display != previously_displayed_run
+      run_to_display = runs.sample
+    end
+
+    previously_displayed_run = run_to_display
+
+    {
+      "channel"   =>  ["gamesdonequick", "superiorwarbringer"].sample,
+      "runner"    =>  run_to_display.runner.name,
+      "game"      =>  run_to_display.game.name,
+      "team"      =>  run_to_display.team.name,
+      "estimate"  =>  run_to_display.estimate
+    }.to_json
   end
-
-  previously_displayed_run = run_to_display
-
-  {
-    "channel"   =>  ["gamesdonequick", "superiorwarbringer"].sample,
-    "runner"    =>  run_to_display.runner.name,
-    "game"      =>  run_to_display.game.name,
-    "team"      =>  run_to_display.team.name,
-    "estimate"  =>  run_to_display.estimate
-  }.to_json
 end
 
 
-post "/api/run/:id/start" do |context|
-  run = Repo.get!(Run, context.params.url["id"])
-  run.start_time = Time.now
-  Repo.update(run)
-end
-
-post "/api/run/:id/finish" do |context|
-  run = Repo.get!(Run, context.params.url["id"])
-  run.finish_time = Time.now
-  Repo.update(run)
+ws "/runner" do |socket|
+  RunnerSocket.new(socket)
 end
 
 
