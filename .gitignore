@@ -3,3 +3,5 @@
 /bin/
 
 /race_stats
+# Production-configured migration assistant
+/prod_micrate

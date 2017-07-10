@@ -9,6 +9,7 @@ module SocketManager
 
   SOCKETS = [] of HTTP::WebSocket
 
+
   def add_listener(socket)
     SOCKETS.push(socket)
   end
