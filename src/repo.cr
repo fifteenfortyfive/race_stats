@@ -1,8 +1,13 @@
+require "yaml"
+
+CONFIG = YAML.parse(File.read("./repo_config.yaml"))
+
 module Repo
   extend Crecto::Repo
 
   config do |conf|
-    conf.adapter = Crecto::Adapters::Postgres # or Crecto::Adapters::Mysql or Crecto::Adapters::SQLite3
+    conf.adapter  = Crecto::Adapters::Postgres
+    conf.uri      = ENV["DATABASE_URL"]? || CONFIG["DATABASE_URL"].as_s
     conf.database = "fifteenfortyfive"
     conf.hostname = "localhost"
     conf.username = "race_admin"
