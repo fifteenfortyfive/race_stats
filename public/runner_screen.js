@@ -54,6 +54,8 @@ class RunnerScreen {
       run_actions.innerHTML = '';
       if(!run.start_time) {
         run_actions.appendChild(create_action("Start run", 'start', run.id));
+      } else {
+        run_actions.appendChild(create_action("Reset", 'reset', run.id));
       }
 
       if(run.start_time && !run.finish_time) {
@@ -86,6 +88,7 @@ class RunnerScreen {
     };
 
     if(runs instanceof MessageEvent) {
+      if(runs.data == "pong") return;
       console.log(JSON.parse(runs.data));
       do_update(JSON.parse(runs.data));
     } else if(Array.isArray(runs)) {

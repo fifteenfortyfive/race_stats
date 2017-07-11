@@ -32,6 +32,20 @@ class RunnerSocket
       # Update the stats screen to show the new active run.
       SocketManager.update_listeners
 
+    when "reset"
+      run = Repo.get!(Run, msg["run_id"].to_s)
+      run.start_time = nil
+      run.finish_time = nil
+      run.progress = 0
+      run.current_split = 0
+      Repo.update(run)
+      team = Repo.get_association!(run, :team).as(Team)
+      Repo.update(team)
+
+      @socket.send(run.to_json.to_s)
+      # Update the stats screen to show the new active run.
+      SocketManager.update_listeners
+
     when "split"
       run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.current_split = Math.min(run.current_split.not_nil! + 1, run.splits_json.to_a.size)
