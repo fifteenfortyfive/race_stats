@@ -22,6 +22,12 @@ class RunnerScreen {
     let base_uri = ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host;
     this.socket = new WebSocket(base_uri + "/runner");
     this.socket.onmessage = this.update_runs.bind(this);
+    this.socket.onclose = function() { console.log("closed"); document.querySelector(".socket-connection-lost").classList.remove("hidden"); };
+    let self = this;
+    // Sockets on heroku die after 55 seconds, so keep it alive by pinging every 30 seconds.
+    setInterval(function() {
+      self.socket.send("ping");
+    }, 30*1000);
   }
 
   intercept_click(e) {

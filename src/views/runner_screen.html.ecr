@@ -10,6 +10,9 @@
 
   <body>
     <div class="runs">
+      <div class="socket-connection-lost hidden">
+        <span>Connection to the server has been lost. Refresh this page to reconnect and continue your runs.</span>
+      </div>
       <div class="runner-info">
         <span class="runner-name"><%= runner.name %></span>
         running <span class="run-count"><%= runs.map(&.game.name).join(", ") %></span>

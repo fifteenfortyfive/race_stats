@@ -73,6 +73,8 @@ class RunnerSocket
 
       @socket.send(run.to_json.to_s)
       SocketManager.update_listeners
+    when "ping"
+      @socket.send("pong")
     end
   end
 end

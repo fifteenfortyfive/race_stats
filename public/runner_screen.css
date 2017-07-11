@@ -6,6 +6,17 @@ body {
   box-sizing: border-box;
 }
 
+.socket-connection-lost {
+  background-color: #f5c4c4;
+  padding: 16px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
 .runs .runner-info {
   width: 640px;
   color: #aaa;
