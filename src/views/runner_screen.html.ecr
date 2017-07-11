@@ -12,7 +12,7 @@
     <div class="runs">
       <div class="runner-info">
         <span class="runner-name"><%= runner.name %></span>
-        running <span class="run-count"><%= runs.size %> games</span>
+        running <span class="run-count"><%= runs.map(&.game.name).join(", ") %></span>
         for <span class="team-name"><%= runs.first.team.name %></span>
       </div>
       <% runs.each do |run| %>
