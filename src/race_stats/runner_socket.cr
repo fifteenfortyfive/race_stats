@@ -39,7 +39,15 @@ class RunnerSocket
       run.progress = 0
       run.current_split = 0
       Repo.update(run)
+
+      @socket.send(run.to_json.to_s)
+      # Update the stats screen to show the new active run.
+      SocketManager.update_listeners
+
+    when "set_as_current_run"
+      run = Repo.get!(Run, msg["run_id"].to_s)
       team = Repo.get_association!(run, :team).as(Team)
+      team.current_run = run.schedule_number
       Repo.update(team)
 
       @socket.send(run.to_json.to_s)

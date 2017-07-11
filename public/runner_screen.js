@@ -65,6 +65,7 @@ class RunnerScreen {
           run_actions.appendChild(create_action("Split", 'split', run.id));
         }
         run_actions.appendChild(create_action("Unsplit", 'unsplit', run.id));
+        run_actions.appendChild(create_action("Set as current run", 'set_as_current_run', run.id));
       }
 
       run_element.querySelector(".progress-current").innerText = run.progress;
