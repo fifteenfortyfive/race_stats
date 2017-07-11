@@ -1,37 +1,107 @@
 body {
   font-family: proxima-nova;
+  width: 640px;
+  margin: auto;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.runs .runner-info {
+  width: 640px;
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+.runs .runner-info .runner-name {
+  font-size: 40px;
+  font-weight: bold;
+  display: block;
+  color: #000;
+}
+
+.runs .runner-info .run-count {
+  color: #000;
+}
+
+.runs .runner-info .team-name {
+  color: #000;
 }
 
 .runs .run {
-  width: 400px;
-  float: left;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
+
+.runs .run .info {
+  flex: 0 0 300px;
+}
+
 
 .runs .run .game-name {
   margin: 0;
   margin-bottom: 5px;
   padding: 0;
+  font-size: 2em;
 }
 
-.estimate {
-  display: block;
-  color: #777;
+.game-name small {
+  color: #aaa;
+  font-size: 1ex;
+  margin-left: 12px;
 }
 
 .progress {
   display: block;
 }
 
-.run-actions button {
+button {
   margin: 8px 8px 0 0;
   padding: 8px 12px;
   border: 1px solid #eee;
   border-radius: 4px;
   background-color: #fff;
+  font-size: 14px;
 }
 
-.run-actions button:hover {
+button:hover {
   cursor: pointer;
   background-color: #eee;
+}
+
+.runs .run .info textarea {
+  width: 100%;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+
+
+.splits {
+  flex: 0 0 320px;
+  height: 320px;
+  overflow: scroll;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.splits .split {
+  padding: 6px 12px;
+  border-bottom: 1px solid #eee;
+  color: #aaa;
+  display: flex;
+}
+
+.splits .split:last-child {
+  border-bottom: none;
+}
+
+.splits .split:hover {
+  background-color: #f7f7f7;
+}
+
+.splits .split.active {
+  color: #000;
 }

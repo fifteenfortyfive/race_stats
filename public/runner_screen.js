@@ -4,7 +4,16 @@ function create_action(text, action, run_id) {
   element.setAttribute('data-action', action);
   element.setAttribute('data-run', run_id);
   return element;
-}
+};
+
+let split_template = document.querySelector("#split_template");
+
+function create_split_element(split, index) {
+  let element = document.importNode(split_template.content, true).firstElementChild;
+  element.setAttribute('data-index', 'index');
+  element.innerText = split;
+  return element;
+};
 
 class RunnerScreen {
   constructor(runner_container) {
@@ -21,8 +30,12 @@ class RunnerScreen {
       let run_id = target.getAttribute('data-run');
       let action = target.getAttribute('data-action');
 
-      this.socket.send(JSON.stringify({ action: action, run_id: run_id }));
-      //tell the browser not to respond to the link click
+      if(action == "update_splits") {
+        this.socket.send(JSON.stringify({ action: action, run_id: run_id, splits: document.querySelector(`#splits_editor${run_id}`).value }));
+      } else {
+        this.socket.send(JSON.stringify({ action: action, run_id: run_id }));
+      }
+
       e.preventDefault();
     }
   }
@@ -41,13 +54,12 @@ class RunnerScreen {
         if(run.current_split == run.splits.length) {
           run_actions.appendChild(create_action("Finish run", 'finish', run.id));
         } else {
-          run_actions.appendChild(create_action("Add progress", 'split', run.id));
+          run_actions.appendChild(create_action("Split", 'split', run.id));
         }
-        run_actions.appendChild(create_action("Remove progress", 'unsplit', run.id));
+        run_actions.appendChild(create_action("Unsplit", 'unsplit', run.id));
       }
 
       run_element.querySelector(".progress-current").innerText = run.progress;
-      run_element.querySelector(".current-split").innerText = run.current_split == run.splits.length ? "None" : run.splits[run.current_split];
 
       run_element.querySelector(".current-time").innerText = moment.duration(run.elapsed_time, 's').format("hh:mm:ss", { trim: false });
       if(run.in_progress) {
@@ -55,6 +67,16 @@ class RunnerScreen {
       } else {
         run_element.querySelector(".current-time").classList.remove('updated-timer');
       }
+
+      let splits_container = run_element.querySelector(".splits");
+      splits_container.innerHTML = '';
+      run.splits.forEach(function(split, index) {
+        let split_element = create_split_element(split, index)
+        if(index == run.current_split) {
+          split_element.classList.add("active");
+        }
+        splits_container.appendChild(split_element);
+      });
     };
 
     if(runs instanceof MessageEvent) {

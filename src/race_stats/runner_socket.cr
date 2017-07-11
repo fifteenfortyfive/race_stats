@@ -60,6 +60,19 @@ class RunnerSocket
       @socket.send(run.to_json.to_s)
       # Update the stats screen to show the new active run.
       SocketManager.update_listeners
+
+    when "update_splits"
+      run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
+      run.splits = msg["splits"].to_s.split(',').map(&.strip).to_json
+      if run.game.progress_unit == "%"
+        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
+      else
+        run.progress = run.current_split
+      end
+      Repo.update(run)
+
+      @socket.send(run.to_json.to_s)
+      SocketManager.update_listeners
     end
   end
 end

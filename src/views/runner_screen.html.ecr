@@ -9,23 +9,31 @@
   </head>
 
   <body>
-    <h2 class="runner-name"><%= runner.name %></h2>
-
     <div class="runs">
+      <div class="runner-info">
+        <span class="runner-name"><%= runner.name %></span>
+        running <span class="run-count"><%= runs.size %> games</span>
+        for <span class="team-name"><%= runs.first.team.name %></span>
+      </div>
       <% runs.each do |run| %>
         <div class="run" id="run<%= run.id %>">
-          <h2 class="game-name"><%= run.game.name %></h2>
-          <span class="estimate">Estimate: <%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span>
-          Run Time: <span class="current-time updated-timer"><%= run.elapsed_time %></span>
-          <span class="progress">
-            <span class="progress-current"><%= run.progress %></span>
-            of
-            <span class="progress-target"><%= run.game.progress_target %></span>
-          </span>
-          <span class="splits">
-            Next Split: <span class="current-split"><%= run.splits_json[run.current_split.not_nil!] %></span>
-          </span>
-          <div class="run-actions"></div>
+          <div class="info">
+            <h2 class="game-name"><%= run.game.name %><small>EST. <span class="estimate"><%= Time::Span.from(run.estimate.not_nil!, Time::Span::TicksPerSecond) %></span></small></h2>
+            Run Time: <span class="current-time updated-timer"><%= run.elapsed_time %></span>
+            <span class="progress">
+              <span class="progress-current"><%= run.progress %></span>
+              of
+              <span class="progress-target"><%= run.game.progress_target %></span>
+            </span>
+            <div class="run-actions"></div>
+            <textarea rows="6" id="splits_editor<%= run.id %>" placeholder="separate splits,with commas"><%= JSON.parse(run.splits.not_nil!).map(&.to_s).join(",") %></textarea>
+            <button data-action="update_splits" data-run="<%= run.id %>">Update Splits</button>
+          </div>
+          <div class="splits">
+            <template id="split_template">
+              <div class="split"></div>
+            </template>
+          </div>
         </div>
       <% end %>
     </div>
