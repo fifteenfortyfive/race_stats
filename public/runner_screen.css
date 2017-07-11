@@ -9,7 +9,7 @@ body {
 .runs .runner-info {
   width: 640px;
   color: #aaa;
-  margin-bottom: 40px;
+  margin: 20px 0 40px 0;
 }
 
 .runs .runner-info .runner-name {
@@ -28,7 +28,7 @@ body {
 }
 
 .runs .run {
-  margin-top: 20px;
+  margin: 20px 0;
   display: flex;
   justify-content: space-between;
 }
@@ -73,8 +73,10 @@ button:hover {
   width: 100%;
   border: 1px solid #eee;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 14px;
+  padding: 8px;
   margin-top: 8px;
+  line-height: 1.4em;
 }
 
 

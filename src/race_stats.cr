@@ -30,7 +30,7 @@ end
 
 before_all("/api/") { |env| env.response.content_type = "application/json" }
 
-RACE_START_TIME = Time.new(2017, 7, 9, 17, 0, 0)
+RACE_START_TIME = Time.new(2017, 7, 14, 17, 0, 0)
 
 def calculate_start_time(run : Run)
   if run.schedule_number == 1
@@ -83,7 +83,7 @@ get "/api/on_screen" do |env|
     previously_displayed_run = run_to_display
 
     {
-      "channel"   =>  ["gamesdonequick", "superiorwarbringer"].sample,
+      "channel"   =>  run_to_display.runner.twitch_channel,
       "runner"    =>  run_to_display.runner.name,
       "game"      =>  run_to_display.game.name,
       "team"      =>  run_to_display.team.name,

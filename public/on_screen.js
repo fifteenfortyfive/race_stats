@@ -54,8 +54,8 @@ class OnScreen {
         video_frame.classList.remove("hidden");
         old_video.remove();
 
-        new_text.querySelector('.runner').innerText = new_on_screen.runner;
-        new_text.querySelector('.game').innerText = new_on_screen.game;
+        new_text.querySelector('.runner-name').innerText = new_on_screen.runner;
+        new_text.querySelector('.game-name').innerText = new_on_screen.game;
         new_text.querySelector('.team-name').innerText = new_on_screen.team;
         new_text.querySelector('.estimate-time').innerText = moment.duration(parseInt(new_on_screen.estimate), 's').format('hh:mm:ss');
         self.text_container.appendChild(new_text);
