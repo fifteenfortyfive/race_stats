@@ -17,6 +17,10 @@ body {
   display: none;
 }
 
+.runs {
+  margin: 8px;
+}
+
 .runs .runner-info {
   width: 640px;
   color: #aaa;
