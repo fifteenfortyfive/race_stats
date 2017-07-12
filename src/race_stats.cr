@@ -74,7 +74,7 @@ previously_displayed_run = nil
 get "/api/on_screen" do |env|
   runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL"), preload: [:runner, :team, :game])
   if runs.empty?
-    run_to_display = Repo.all(Run, Query.where(schedule_number: 1).limit(1), preload: [:runner, :team, :game]).first
+    run_to_display = Repo.all(Run, Query.where(schedule_number: 1), preload: [:runner, :team, :game]).sample
   else
     run_to_display = runs.sample
     until run_to_display != previously_displayed_run
