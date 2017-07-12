@@ -30,7 +30,8 @@ end
 
 before_all("/api/") { |env| env.response.content_type = "application/json" }
 
-RACE_START_TIME = Time.new(2017, 7, 14, 17, 0, 0)
+# July 14th at 9:00pm UTC
+RACE_START_TIME = Time.epoch(1500066000)
 
 def calculate_start_time(run : Run)
   if run.schedule_number == 1
@@ -73,23 +74,23 @@ previously_displayed_run = nil
 get "/api/on_screen" do |env|
   runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL"), preload: [:runner, :team, :game])
   if runs.empty?
-    "no runs to display"
+    run_to_display = Repo.all(Run, Query.where(schedule_number: 1).limit(1), preload: [:runner, :team, :game]).first
   else
     run_to_display = runs.sample
     until run_to_display != previously_displayed_run
       run_to_display = runs.sample
     end
-
-    previously_displayed_run = run_to_display
-
-    {
-      "channel"   =>  run_to_display.runner.twitch_channel,
-      "runner"    =>  run_to_display.runner.name,
-      "game"      =>  run_to_display.game.name,
-      "team"      =>  run_to_display.team.name,
-      "estimate"  =>  run_to_display.estimate
-    }.to_json
   end
+
+  previously_displayed_run = run_to_display
+
+  {
+    "channel"   =>  run_to_display.runner.twitch_channel,
+    "runner"    =>  run_to_display.runner.name,
+    "game"      =>  run_to_display.game.name,
+    "team"      =>  run_to_display.team.name,
+    "estimate"  =>  run_to_display.estimate
+  }.to_json
 end
 
 

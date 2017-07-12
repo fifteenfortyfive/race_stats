@@ -1,5 +1,6 @@
 // This is dumb, but it works for now :)
-let epoch = "2017-07-10T21:08:05.000Z";
+// July 14th at 9:00pm UTC
+let epoch = "2017-07-14T21:00:00.000Z";
 let race_start_time = moment.utc(epoch);
 
 function attempt_timer_start() {
