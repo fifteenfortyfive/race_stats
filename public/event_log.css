@@ -1,0 +1,37 @@
+body {
+  font-family: proxima-nova;
+  width: 640px;
+  margin: auto;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.event {
+  border: 3px solid #f7f7f7;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.event.run_start,
+.event.run_finish { border-left: 3px solid #45a545; }
+.event.run_set_current,
+.event.run_edited { border-left: 3px solid #ff00ff; }
+.event.run_reset { border-left: 3px solid #ff0000; }
+
+.event-time {
+  color: #777;
+}
+
+.event-name {
+  font-size: 24px;
+}
+
+.reference-info {
+  display: block;
+  font-size: 12px;
+}
+
+.reference-info td {
+  overflow: scroll;
+}

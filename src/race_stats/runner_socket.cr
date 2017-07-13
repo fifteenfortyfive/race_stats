@@ -19,6 +19,7 @@ class RunnerSocket
       @socket.send(run.to_json.to_s)
       # Update the stats screen as well to start this run's timer.
       SocketManager.update_listeners
+      LogEvent.log("run_start", "run ##{run.id} started", run)
 
     when "finish"
       run = Repo.get!(Run, msg["run_id"].to_s)
@@ -31,6 +32,7 @@ class RunnerSocket
       @socket.send(run.to_json.to_s)
       # Update the stats screen to show the new active run.
       SocketManager.update_listeners
+      LogEvent.log("run_finish", "run ##{run.id} finished", run)
 
     when "reset"
       run = Repo.get!(Run, msg["run_id"].to_s)
@@ -43,6 +45,7 @@ class RunnerSocket
       @socket.send(run.to_json.to_s)
       # Update the stats screen to show the new active run.
       SocketManager.update_listeners
+      LogEvent.log("run_reset", "run ##{run.id} reset", run)
 
     when "set_as_current_run"
       run = Repo.get!(Run, msg["run_id"].to_s)
@@ -53,6 +56,7 @@ class RunnerSocket
       @socket.send(run.to_json.to_s)
       # Update the stats screen to show the new active run.
       SocketManager.update_listeners
+      LogEvent.log("run_set_current", "run ##{run.id} set as current run", run)
 
     when "split"
       run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
@@ -83,6 +87,8 @@ class RunnerSocket
 
       @socket.send(run.to_json.to_s)
       SocketManager.update_listeners
+      LogEvent.log("run_edited", "run ##{run.id} edited", run)
+
     when "ping"
       @socket.send("pong")
     end

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/event_log.css">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+    <script src='https://use.typekit.net/abb5hmw.js'></script>
+    <script>
+      try{Typekit.load({ async: true });}catch(e){}
+    </script>
+  </head>
+
+  <body>
+    <div class="events">
+      <%- events.each do |event| -%>
+        <div class="event <%= event.type %>">
+          <span class="event-name"><%= event.message %></span>
+          <span class="event-time"><%= event.occurred_at %></span>
+        </div>
+      <%- end -%>
+    </div>
+  </body>
+</html>

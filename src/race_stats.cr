@@ -26,6 +26,11 @@ get "/runner/:name" do |context|
   render "src/views/runner_screen.html.ecr"
 end
 
+get "/event_log" do |context|
+  events = Repo.all(LogEvent)
+  render "src/views/event_log.html.ecr"
+end
+
 
 
 before_all("/api/") { |env| env.response.content_type = "application/json" }
