@@ -57,11 +57,7 @@ class RunnerSocket
     when "split"
       run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.current_split = Math.min(run.current_split.not_nil! + 1, run.splits_json.to_a.size)
-      if run.game.progress_unit == "%"
-        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
-      else
-        run.progress = run.current_split
-      end
+      run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * run.game.progress_max.not_nil!).to_i
       puts run.current_split
       Repo.update(run)
 
@@ -72,11 +68,7 @@ class RunnerSocket
     when "unsplit"
       run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.current_split = Math.max(run.current_split.not_nil! - 1, 0)
-      if run.game.progress_unit == "%"
-        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
-      else
-        run.progress = run.current_split
-      end
+      run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * run.game.progress_max.not_nil!).to_i
       Repo.update(run)
 
       @socket.send(run.to_json.to_s)
@@ -86,11 +78,7 @@ class RunnerSocket
     when "update_splits"
       run = Repo.get!(Run, msg["run_id"].to_s, Query.preload(:game))
       run.splits = msg["splits"].to_s.split(',').map(&.strip).to_json
-      if run.game.progress_unit == "%"
-        run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * 100).to_i
-      else
-        run.progress = run.current_split
-      end
+      run.progress = ((run.current_split.not_nil!.to_f / run.splits_json.to_a.size) * run.game.progress_max.not_nil!).to_i
       Repo.update(run)
 
       @socket.send(run.to_json.to_s)
