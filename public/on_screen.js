@@ -3,10 +3,10 @@ class OnScreen {
     this.video_container = video_container;
     this.text_container = text_container;
 
-    // Check if a video transition should happen every minute.
+    // Check if a video transition should happen every 10 minutes.
     this.on_screen = null;
     this.attempt_transition();
-    setInterval(this.attempt_transition.bind(this), 30*1000);
+    setInterval(this.attempt_transition.bind(this), 600*1000);
   }
 
   attempt_transition() {
