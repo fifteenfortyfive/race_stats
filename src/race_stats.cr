@@ -20,6 +20,7 @@ get "/" do
   render "src/views/overview.html.ecr"
 end
 
+
 get "/runner/:name" do |context|
   runner = Repo.get_by!(Runner, name: context.params.url["name"])
   runs = Repo.all(Run, Query.where(runner_id: runner.id).order_by("schedule_number ASC"), preload: [:team, :game])
@@ -29,6 +30,10 @@ end
 get "/event_log" do |context|
   events = Repo.all(LogEvent)
   render "src/views/event_log.html.ecr"
+end
+
+get "/countdown" do |context|
+  render "src/views/countdown.html.ecr"
 end
 
 
