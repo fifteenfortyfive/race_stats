@@ -79,20 +79,16 @@ get "/api/coming_up" do |env|
   end
 end
 
-previously_displayed_run = nil
+next_team_to_display = -1
 
 get "/api/on_screen" do |env|
-  runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL"), preload: [:runner, :team, :game])
+  next_team_to_display += 1
+  runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL").where(team_id: (next_team_to_display % 6) + 1), preload: [:runner, :team, :game])
   if runs.empty?
     run_to_display = Repo.all(Run, Query.where(schedule_number: 1), preload: [:runner, :team, :game]).sample
   else
-    run_to_display = runs.sample
-    until run_to_display != previously_displayed_run
-      run_to_display = runs.sample
-    end
+    run_to_display = runs.first
   end
-
-  previously_displayed_run = run_to_display
 
   {
     "channel"   =>  run_to_display.runner.twitch_channel,
