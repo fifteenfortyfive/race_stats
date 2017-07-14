@@ -27,7 +27,7 @@ class OnScreen {
     let old_video = self.video_container.querySelector("iframe");
     // Create a new video frame to transition to.
     let video_frame = document.createElement('iframe');
-    video_frame.src = `//player.twitch.tv/?channel=${new_on_screen.channel}&muted=true&controls=false`
+    video_frame.src = `//player.twitch.tv/?channel=${new_on_screen.channel}&controls=false`
     video_frame.width = "856";
     video_frame.height = "479";
     video_frame.allowfullscreen = "true";
