@@ -5,17 +5,19 @@ class OnScreen {
 
     // Check if a video transition should happen every 10 minutes.
     this.on_screen = null;
+    this.team_to_show = 1;
     this.attempt_transition();
     setInterval(this.attempt_transition.bind(this), 600*1000);
   }
 
   attempt_transition() {
     let self = this;
-    nanoajax.ajax({ url: '/api/on_screen', method: 'GET' }, function(code, response) {
+    nanoajax.ajax({ url: `/api/on_screen?team_to_show=${self.team_to_show}`, method: 'GET' }, function(code, response) {
       let old_on_screen = self.on_screen;
       let new_on_screen = JSON.parse(response);
       if(old_on_screen != new_on_screen) {
         self.transition_to(new_on_screen);
+        self.team_to_show = (self.team_to_show % 6) + 1;
       }
     });
   }

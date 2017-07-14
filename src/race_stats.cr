@@ -79,11 +79,9 @@ get "/api/coming_up" do |env|
   end
 end
 
-next_team_to_display = -1
-
 get "/api/on_screen" do |env|
-  next_team_to_display += 1
-  runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL").where(team_id: (next_team_to_display % 6) + 1), preload: [:runner, :team, :game])
+  team_to_show = env.params.query["team_to_show"].to_i
+  runs = Repo.all(Run, Query.where("start_time IS NOT NULL AND finish_time IS NULL").where(team_id: team_to_show), preload: [:runner, :team, :game])
   if runs.empty?
     run_to_display = Repo.all(Run, Query.where(schedule_number: 1), preload: [:runner, :team, :game]).sample
   else
