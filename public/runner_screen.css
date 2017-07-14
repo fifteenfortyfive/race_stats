@@ -21,6 +21,16 @@ body {
   margin: 8px;
 }
 
+.runs .race-info {
+  width: 640px;
+  color: #aaa;
+  margin: 20px 0 40px 0;
+}
+
+.runs .race-info .timer-time {
+  color: #000;
+}
+
 .runs .runner-info {
   width: 640px;
   color: #aaa;
