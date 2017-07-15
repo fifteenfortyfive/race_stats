@@ -37,6 +37,11 @@ class Teams {
             for(let run_number in team.runs) {
               let run = team.runs[run_number];
               element.querySelector(`footer .games-table .game.${run.game_id} .game-time`).innerText = moment.duration(run.time, 'seconds').format("h:mm:ss", { trim: false });
+              if(run.finished) {
+                element.querySelector(`footer .games-table .game.${run.game_id}`).classList.add('finished');
+              } else {
+                element.querySelector(`footer .games-table .game.${run.game_id}`).classList.remove('finished');
+              }
             }
           }
 

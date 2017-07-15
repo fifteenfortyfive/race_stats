@@ -230,6 +230,12 @@ body {
 .team .games-table .series .game {
   width: 100%;
   display: flex;
+  color: #555;
+}
+
+.team .games-table .series .game.finished {
+  font-weight: bold;
+  color: #000;
 }
 
 .team .games-table .series .game-name {
@@ -240,11 +246,11 @@ body {
 }
 
 .team .games-table .series .game-time {
-  font-weight: normal;
   display: inline-block;
   text-align: right;
   flex: 1 1 auto;
 }
+
 
 
 // Animations
