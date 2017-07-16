@@ -19,7 +19,7 @@ class Teams {
               container.appendChild(element);
             }
 
-            let current_run = team.runs[team.current_run];
+            let current_run = team.runs[team.current_run] || team.runs[team.runs.length-1];
             element.querySelector('header .meta .name').innerText = team_name;
             element.querySelector('header .meta .current-game').innerText = current_run.game;
             element.querySelector('header .meta .current-runner').innerText = current_run.runner;
