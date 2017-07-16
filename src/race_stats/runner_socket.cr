@@ -50,7 +50,7 @@ class RunnerSocket
     when "set_as_current_run"
       run = Repo.get!(Run, msg["run_id"].to_s)
       team = Repo.get_association!(run, :team).as(Team)
-      team.current_run = run.schedule_number
+      team.current_run = Math.min(run.schedule_number.not_nil!, 13)
       Repo.update(team)
 
       @socket.send(run.to_json.to_s)

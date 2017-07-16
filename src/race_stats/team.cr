@@ -6,4 +6,8 @@ class Team < Crecto::Model
     has_many :runs, Run
     has_many :runners, Runner
   end
+
+  def current_run_clamped
+    Math.min(self.current_run, 13)
+  end
 end
